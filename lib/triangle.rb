@@ -1,33 +1,34 @@
 class Triangle
   attr_accessor :side1, :side2, :side3
   @sides = []
+  # include TriangleError
 
   def initialize(side1, side2, side3)
     @side1 = side1
     @side2 = side2
     @side3 = side3
     @sides = [side1, side2, side3]
+    # include TriangleError
   end
-
   def kind
-    if invalid == true
-      begin
+    if self.invalid == true
+      # begin
        raise TriangleError
-       rescue TriangleError => error
-        puts error.message
-      end
-    elsif(equilateral)
+      #  rescue TriangleError => error
+      #   puts error.message
+      # end
+    elsif equilateral
       :equilateral
-    elsif(scalene)
+    elsif scalene 
       :scalene
-    elsif(isosceles)
+    elsif isosceles
       :isosceles
     end
   end
 
   def invalid
     @sides.each do |length|
-      if length <= 0 && @side1 + @side2 > @side3 && @side1 + @side3 > @side2 && @side2 + @side3 > @side1 
+      if length <= 0 || @side1 + @side2 > @side3 && @side1 + @side3 > @side2 && @side2 + @side3 > @side1 
          true
       else
         false
@@ -54,5 +55,7 @@ class Triangle
 end
 
 class TriangleError < StandardError
-  "you must give the get_married method an argument of an instance of the person class!"
+  def message
+   "Side length must be greater than 0.  The sum of two sides must be greater than the third."
+  end
 end
